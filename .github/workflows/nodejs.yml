@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Node.js CI/CD
 
 on:
   push:
@@ -6,20 +6,43 @@ on:
       - main
 
 jobs:
-  build:
+  build-test-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout code
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # 3️⃣ Install dependencies
       - name: Install Dependencies
         run: npm install
 
-      - name: Run App
-        run: node app.js &
+      # 4️⃣ Run tests (CI part)
+      - name: Run Tests
+        run: npm test
+
+      # 5️⃣ Build step (simulated)
+      - name: Build App
+        run: echo "Building application... DONE"
+
+      # 6️⃣ CD step (deployment simulation)
+      - name: Deploy Application
+        run: |
+          echo "Deploying application..."
+          mkdir -p deploy
+          cp -r . deploy/
+          echo "Deployment successful 🚀"
+
+      # 7️⃣ Show deployed version
+      - name: Verify Deployment
+        run: |
+          cd deploy
+          node -v
+          echo "App deployed successfully"
