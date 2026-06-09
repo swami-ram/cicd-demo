@@ -32,15 +32,22 @@ jobs:
       - name: Build App
         run: echo "Building application... DONE"
 
-      # 6️⃣ CD step (deployment simulation)
+      # 6️⃣ Deploy step (CD simulation)
       - name: Deploy Application
         run: |
           echo "Deploying application..."
+
+          # create deploy folder
           mkdir -p deploy
-          cp -r . deploy/
+
+          # copy only required files (SAFE WAY)
+          cp app.js deploy/
+          cp package.json deploy/
+          cp package-lock.json deploy/
+
           echo "Deployment successful 🚀"
 
-      # 7️⃣ Show deployed version
+      # 7️⃣ Verify deployment
       - name: Verify Deployment
         run: |
           cd deploy
